@@ -4,6 +4,9 @@ import DenunciaModal from './components/DenunciaModal'
 import { PINS, PIN_CONFIG } from './data/pins'
 import { useState, useEffect, useRef } from 'react'
 import FilterPanel from './components/FilterPanel'
+import PinPopup from './components/PinPopup'
+import StarBar from './components/StarBar'
+import Fab from './components/Fab'
 export default function ConquistaLimpa() {
 	const mapRef = useRef(null)
 	const leafletMap = useRef(null)
@@ -156,181 +159,16 @@ export default function ConquistaLimpa() {
 
 				{/* POPUP de pin selecionado */}
 				{selectedPin && (
-					<div
-						style={{
-							position: 'absolute',
-							bottom: 100,
-							left: '50%',
-							transform: 'translateX(-50%)',
-							zIndex: 50,
-							background: 'rgba(10,20,10,0.96)',
-							backdropFilter: 'blur(16px)',
-							border: `1px solid ${PIN_CONFIG[selectedPin.type].color}44`,
-							borderRadius: 14,
-							padding: '14px 18px',
-							minWidth: 260,
-							maxWidth: 320,
-							boxShadow: `0 4px 24px ${PIN_CONFIG[selectedPin.type].color}22`
-						}}
-					>
-						<button
-							onClick={() => setSelectedPin(null)}
-							style={{
-								position: 'absolute',
-								top: 8,
-								right: 10,
-								background: 'none',
-								border: 'none',
-								color: 'rgba(134,239,172,0.5)',
-								fontSize: 18,
-								cursor: 'pointer',
-								lineHeight: 1
-							}}
-						>
-							×
-						</button>
-
-						<div
-							style={{
-								display: 'flex',
-								alignItems: 'center',
-								gap: 8,
-								marginBottom: 8
-							}}
-						>
-							{selectedPin.image && (
-								<img
-									src={selectedPin.image}
-									alt={selectedPin.title}
-									style={{
-										width: '100%',
-										height: 140,
-										objectFit: 'cover',
-										borderRadius: 10,
-										marginBottom: 10
-									}}
-								/>
-							)}
-
-							<div>
-								<div
-									style={{ fontSize: 14, fontWeight: 700, color: '#f0fdf4' }}
-								>
-									{selectedPin.title}
-								</div>
-
-								<span
-									style={{
-										fontSize: 10,
-										padding: '2px 8px',
-										borderRadius: 99,
-										fontFamily: "'DM Sans', sans-serif",
-										background: PIN_CONFIG[selectedPin.type].bg,
-										color: PIN_CONFIG[selectedPin.type].text
-									}}
-								>
-									{PIN_CONFIG[selectedPin.type].label}
-								</span>
-							</div>
-						</div>
-						<p
-							style={{
-								fontSize: 12,
-								color: 'rgba(134,239,172,0.75)',
-								fontFamily: "'DM Sans', sans-serif",
-								lineHeight: 1.6,
-								margin: '0 0 10px'
-							}}
-						>
-							{selectedPin.desc}
-						</p>
-					</div>
+					<PinPopup
+						selectedPin={selectedPin}
+						onClose={() => setSelectedPin(null)}
+					/>
 				)}
 
 				{/* STATS BAR */}
-				<div
-					style={{
-						position: 'absolute',
-						bottom: 16,
-						left: '50%',
-						transform: 'translateX(-50%)',
-						zIndex: 50,
-						background: 'rgba(10,20,10,0.92)',
-						backdropFilter: 'blur(12px)',
-						border: '1px solid rgba(34,197,94,0.15)',
-						borderRadius: 99,
-						padding: '8px 20px',
-						display: 'flex',
-						gap: 0,
-						whiteSpace: 'nowrap'
-					}}
-				>
-					{Object.entries(PIN_CONFIG).map(([type, cfg], i) => (
-						<div
-							key={type}
-							style={{
-								display: 'flex',
-								alignItems: 'center',
-								gap: 6,
-								padding: '0 16px',
-								borderRight: i < 3 ? '1px solid rgba(34,197,94,0.15)' : 'none'
-							}}
-						>
-							<div
-								style={{
-									width: 8,
-									height: 8,
-									borderRadius: '50%',
-									background: cfg.color
-								}}
-							/>
-							<span
-								style={{
-									fontSize: 12,
-									color: '#e8f5e8',
-									fontFamily: "'DM Sans', sans-serif"
-								}}
-							>
-								<strong style={{ color: cfg.color }}>{counts[type]}</strong>{' '}
-								{cfg.label}
-							</span>
-						</div>
-					))}
-				</div>
-
+				<StarBar counts={counts} />
 				{/* FAB botão denúncia */}
-				<button
-					onClick={() => setModalOpen(true)}
-					style={{
-						position: 'absolute',
-						bottom: 76,
-						right: 16,
-						zIndex: 50,
-						width: 52,
-						height: 52,
-						borderRadius: '50%',
-						background: 'linear-gradient(135deg,#22c55e,#16a34a)',
-						border: 'none',
-						fontSize: 22,
-						cursor: 'pointer',
-						boxShadow: '0 4px 20px rgba(34,197,94,0.4)',
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-						transition: 'transform 0.2s, box-shadow 0.2s'
-					}}
-					onMouseEnter={e => {
-						e.currentTarget.style.transform = 'scale(1.1)'
-						e.currentTarget.style.boxShadow = '0 6px 28px rgba(34,197,94,0.6)'
-					}}
-					onMouseLeave={e => {
-						e.currentTarget.style.transform = 'scale(1)'
-						e.currentTarget.style.boxShadow = '0 4px 20px rgba(34,197,94,0.4)'
-					}}
-					title="Fazer denúncia"
-				>
-					📢
-				</button>
+				<Fab onClick={() => setModalOpen(true)} />
 			</div>
 
 			{/* FOOTER */}
