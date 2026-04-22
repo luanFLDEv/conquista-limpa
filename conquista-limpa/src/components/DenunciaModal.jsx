@@ -63,6 +63,9 @@ export default function DenunciaModal({ onClose }) {
 						>
 							via WhatsApp · triagem em até 24h
 						</div>
+						<div className="animate-pulse">
+							<p>Testando</p>
+						</div>
 					</div>
 					<button
 						onClick={() => onClose(false)}

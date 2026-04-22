@@ -120,7 +120,7 @@ export default function ConquistaLimpa() {
 			/>
 
 			{/* HEADER */}
-			<Header onDenunciaClick={setModalOpen} />
+			<Header onDenunciaClick={() => setModalOpen(true)} />
 
 			{/* MAP AREA */}
 			<div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>

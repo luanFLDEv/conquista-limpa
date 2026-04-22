@@ -4,15 +4,27 @@ export default function Footer() {
 			style={{
 				background: 'rgba(5,10,5,0.98)',
 				borderTop: '1px solid rgba(34,197,94,0.15)',
-				padding: '14px 24px',
+				padding: '16px',
 				display: 'flex',
+				flexDirection: window.innerWidth < 768 ? 'column' : 'row',
 				alignItems: 'center',
 				justifyContent: 'space-between',
+				gap: 12,
+				textAlign: 'center',
 				flexShrink: 0,
 				zIndex: 100
 			}}
 		>
-			<div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+			{/* Parte esquerda */}
+			<div
+				style={{
+					display: 'flex',
+					alignItems: 'center',
+					gap: 8,
+					justifyContent: 'center',
+					flexWrap: 'wrap'
+				}}
+			>
 				<span style={{ fontSize: 14 }}>🌿</span>
 				<span
 					style={{
@@ -24,7 +36,16 @@ export default function Footer() {
 					© 2025 Conquista Limpa — Vitória da Conquista, BA
 				</span>
 			</div>
-			<div style={{ display: 'flex', gap: 16 }}>
+
+			{/* Links */}
+			<div
+				style={{
+					display: 'flex',
+					flexDirection: window.innerWidth < 768 ? 'column' : 'row',
+					gap: 10,
+					alignItems: 'center'
+				}}
+			>
 				{['Sobre o projeto', 'Fale conosco', 'Prefeitura de VDC'].map(item => (
 					<button
 						key={item}
